@@ -1,51 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
-import { FiBook, FiCreditCard, FiSmartphone, FiFileText, FiGift, FiShield } from "react-icons/fi";
+import EbookCard from "@/components/EbookCard";
+import { FiCreditCard, FiSmartphone, FiFileText, FiGift, FiShield, FiBookOpen } from "react-icons/fi";
 
-const diabetesEbooks = [
-  {
-    title: "DoceEquilíbrio",
-    subtitle: "Guia para famílias com diabetes infantil",
-    description:
-      "Um guia acolhedor e cientificamente embasado para famílias que convivem com a diabetes tipo 1 em crianças. Da rotina escolar à cozinha, cada capítulo foi pensado para transformar medo em confiança e insegurança em preparo. Inclui planos alimentares, dicas de emergência e histórias reais de famílias que encontraram o equilíbrio.",
-    targetAudience: "Famílias com crianças diagnosticadas com diabetes tipo 1 ou tipo 2",
-    price: 47.9,
-    originalPrice: 59.9,
-  },
-  {
-    title: "NeuroDoces",
-    subtitle: "150 receitas sem açúcar que nutrem o cérebro",
-    description:
-      "Receitas deliciosas, seguras e cientificamente formuladas para quem precisa controlar a glicemia sem abrir mão do prazer à mesa. Cada receita foi desenvolvida para nutrir não apenas o corpo, mas também o cérebro, com ingredientes que favorecem a função cognitiva e o bem-estar emocional.",
-    targetAudience: "Pessoas com diabetes, cuidadores e profissionais de nutrição",
-    price: 39.9,
-    originalPrice: 54.9,
-  },
-  {
-    title: "Refeições Saudáveis Congeladas",
-    subtitle: "Praticidade para rotinas corridas",
-    description:
-      "Para quem cuida de alguém com diabetes e não tem tempo a perder: um manual prático de meal prep com receitas que podem ser congeladas sem perder valor nutricional. Organização semanal, listas de compras e tabelas nutricionais completas.",
-    targetAudience: "Cuidadores, mães e pais com rotinas intensas",
-    price: 34.9,
-  },
-  {
-    title: "Guia de Segurança Alimentar",
-    subtitle: "Prevenção de infecções e picos glicêmicos",
-    description:
-      "Um manual indispensável que cruza segurança alimentar com controle glicêmico. Aprenda a armazenar, preparar e servir alimentos de forma segura, prevenindo contaminações que podem desestabilizar o controle da diabetes.",
-    targetAudience: "Cuidadores, profissionais de saúde e famílias",
-    price: 29.9,
-    originalPrice: 39.9,
-  },
-];
+interface Ebook {
+  id: string;
+  title: string;
+  description: string;
+  coverImage: string | null;
+  price: number;
+  originalPrice: number | null;
+  targetAudience: string | null;
+  buyLink: string | null;
+}
 
 export default function DiabetesPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [leadStatus, setLeadStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [ebooks, setEbooks] = useState<Ebook[]>([]);
+
+  useEffect(() => {
+    fetch("/api/ebooks?category=diabetes")
+      .then((r) => r.json())
+      .then((data: Ebook[]) => setEbooks(data))
+      .catch(() => {});
+  }, []);
 
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,19 +60,14 @@ export default function DiabetesPage() {
               Especialidade
             </div>
           </ScrollReveal>
-
           <ScrollReveal delay={0.1}>
-            <h1 className="text-3xl sm:text-4xl font-bold text-text mb-4">
-              Diabetes
-            </h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-text mb-4">Diabetes</h1>
           </ScrollReveal>
-
           <ScrollReveal delay={0.15}>
             <p className="text-lg sm:text-xl text-agua-dark font-medium mb-6">
               Cuidar de quem tem diabetes é um ato de amor, ciência e coragem.
             </p>
           </ScrollReveal>
-
           <ScrollReveal delay={0.2}>
             <div className="text-text-light leading-relaxed space-y-4 text-base sm:text-lg">
               <p>
@@ -123,64 +100,35 @@ export default function DiabetesPage() {
             </p>
           </ScrollReveal>
 
-          <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
-            {diabetesEbooks.map((ebook, i) => (
-              <ScrollReveal key={ebook.title} delay={i * 0.1}>
-                <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full">
-                  {/* Cover placeholder */}
-                  <div className="h-48 bg-gradient-to-br from-agua-light/40 via-azul-light/30 to-verde/20 flex items-center justify-center relative">
-                    <div className="w-16 h-16 rounded-2xl bg-white/70 backdrop-blur-sm flex items-center justify-center shadow-sm">
-                      <FiBook className="w-7 h-7 text-agua-dark" />
-                    </div>
-                    {ebook.originalPrice && (
-                      <div className="absolute top-3 right-3 bg-verde text-white text-xs font-bold px-3 py-1 rounded-full">
-                        {Math.round((1 - ebook.price / ebook.originalPrice) * 100)}% OFF
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6 flex flex-col flex-1">
-                    <h3 className="font-bold text-text text-xl">{ebook.title}</h3>
-                    {ebook.subtitle && (
-                      <p className="text-agua-dark text-sm font-medium mt-1">{ebook.subtitle}</p>
-                    )}
-                    <p className="text-sm text-text-light mt-3 flex-1 leading-relaxed">
-                      {ebook.description}
-                    </p>
-
-                    <p className="text-xs text-agua-dark mt-4 bg-agua/10 px-3 py-2 rounded-lg">
-                      Público-alvo: {ebook.targetAudience}
-                    </p>
-
-                    <div className="mt-4 flex items-center gap-3">
-                      {ebook.originalPrice && (
-                        <span className="text-sm text-text-light line-through">
-                          {ebook.originalPrice.toLocaleString("pt-BR", {
-                            style: "currency",
-                            currency: "BRL",
-                          })}
-                        </span>
-                      )}
-                      <span className="text-xl font-bold text-agua-dark">
-                        {ebook.price.toLocaleString("pt-BR", {
-                          style: "currency",
-                          currency: "BRL",
-                        })}
-                      </span>
-                    </div>
-
-                    <a
-                      href="#"
-                      className="mt-4 block text-center px-6 py-3 bg-agua-dark text-white text-sm font-medium rounded-xl hover:bg-agua transition-colors"
-                    >
-                      Comprar agora
-                    </a>
-                  </div>
+          {ebooks.length > 0 ? (
+            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {ebooks.map((ebook, i) => (
+                <ScrollReveal key={ebook.id} delay={i * 0.1}>
+                  <EbookCard
+                    title={ebook.title}
+                    description={ebook.description}
+                    coverImage={ebook.coverImage}
+                    price={ebook.price}
+                    originalPrice={ebook.originalPrice}
+                    targetAudience={ebook.targetAudience}
+                    buyLink={ebook.buyLink}
+                  />
+                </ScrollReveal>
+              ))}
+            </div>
+          ) : (
+            <ScrollReveal>
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <div className="w-14 h-14 rounded-full bg-agua/10 flex items-center justify-center mb-4">
+                  <FiBookOpen className="w-6 h-6 text-agua-dark" />
                 </div>
-              </ScrollReveal>
-            ))}
-          </div>
+                <p className="text-text font-medium mb-1">Em breve</p>
+                <p className="text-text-light text-sm max-w-xs">
+                  Novos e-books sobre diabetes chegando em breve!
+                </p>
+              </div>
+            </ScrollReveal>
+          )}
         </div>
       </section>
 
@@ -216,7 +164,7 @@ export default function DiabetesPage() {
         </div>
       </section>
 
-      {/* Lead Magnet / Newsletter */}
+      {/* Lead Magnet */}
       <section className="bg-verde/10 py-14 px-4 sm:px-6 lg:px-8">
         <div className="max-w-xl mx-auto text-center">
           <ScrollReveal>
@@ -237,9 +185,7 @@ export default function DiabetesPage() {
           <ScrollReveal delay={0.1}>
             {leadStatus === "success" ? (
               <div className="bg-verde/20 text-verde-dark px-6 py-4 rounded-xl">
-                <p className="font-medium">
-                  Obrigado! Verifique seu e-mail para baixar o checklist.
-                </p>
+                <p className="font-medium">Obrigado! Verifique seu e-mail para baixar o checklist.</p>
               </div>
             ) : (
               <form onSubmit={handleLeadSubmit} className="flex flex-col sm:flex-row gap-3">
@@ -268,7 +214,6 @@ export default function DiabetesPage() {
                 </button>
               </form>
             )}
-
             {leadStatus === "error" && (
               <p className="text-red-500 text-sm mt-3">Erro ao enviar. Tente novamente.</p>
             )}

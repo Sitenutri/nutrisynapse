@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { FiSave, FiArrowLeft } from "react-icons/fi";
 import Link from "next/link";
 import slugify from "slugify";
+import ImageUpload from "@/components/ImageUpload";
 
 const CATEGORIES = [
   { value: "neurociencia", label: "Neurociência" },
@@ -38,9 +39,7 @@ export default function NewEbookPage() {
   }, [status, router]);
 
   useEffect(() => {
-    if (title) {
-      setSlug(slugify(title, { lower: true, strict: true }));
-    }
+    if (title) setSlug(slugify(title, { lower: true, strict: true }));
   }, [title]);
 
   const handleSave = async () => {
@@ -132,16 +131,11 @@ export default function NewEbookPage() {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-text-light mb-1">URL da imagem de capa</label>
-            <input
-              type="text"
-              value={coverImage}
-              onChange={(e) => setCoverImage(e.target.value)}
-              placeholder="https://..."
-              className="w-full px-4 py-3 rounded-xl border border-beige-dark bg-beige/30 text-sm focus:outline-none focus:ring-2 focus:ring-agua"
-            />
-          </div>
+          <ImageUpload
+            label="Imagem de capa"
+            value={coverImage}
+            onChange={setCoverImage}
+          />
 
           <div>
             <label className="block text-sm font-medium text-text-light mb-1">Categoria</label>

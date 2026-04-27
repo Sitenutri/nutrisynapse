@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter, useParams } from "next/navigation";
 import { FiSave, FiArrowLeft } from "react-icons/fi";
 import Link from "next/link";
+import ImageUpload from "@/components/ImageUpload";
 
 const CATEGORIES = [
   { value: "neurociencia", label: "Neurociência" },
@@ -146,15 +147,11 @@ export default function EditEbookPage() {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-text-light mb-1">URL da imagem de capa</label>
-            <input
-              type="text"
-              value={coverImage}
-              onChange={(e) => setCoverImage(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-beige-dark bg-beige/30 text-sm focus:outline-none focus:ring-2 focus:ring-agua"
-            />
-          </div>
+          <ImageUpload
+            label="Imagem de capa"
+            value={coverImage}
+            onChange={setCoverImage}
+          />
 
           <div>
             <label className="block text-sm font-medium text-text-light mb-1">Categoria</label>

@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { FiPlus, FiTrash2, FiSave, FiArrowLeft } from "react-icons/fi";
 import Link from "next/link";
 import slugify from "slugify";
+import ImageUpload from "@/components/ImageUpload";
+import ImageBlockUpload from "@/components/ImageBlockUpload";
 
 interface Tag {
   id: string;
@@ -26,7 +28,6 @@ export default function NewPostPage() {
   const [tags, setTags] = useState<Tag[]>([]);
   const [saving, setSaving] = useState(false);
 
-  // Form state
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
@@ -46,11 +47,8 @@ export default function NewPostPage() {
     fetch("/api/tags").then((r) => r.json()).then(setTags).catch(() => {});
   }, []);
 
-  // Auto-generate slug from title
   useEffect(() => {
-    if (title) {
-      setSlug(slugify(title, { lower: true, strict: true }));
-    }
+    if (title) setSlug(slugify(title, { lower: true, strict: true }));
   }, [title]);
 
   const addBlock = (type: "text" | "image") => {
@@ -127,7 +125,6 @@ export default function NewPostPage() {
       </div>
 
       <div className="space-y-6">
-        {/* Basic Info */}
         <div className="bg-white rounded-2xl p-6 shadow-sm space-y-4">
           <h2 className="font-bold text-text">Informações básicas</h2>
 
@@ -163,18 +160,12 @@ export default function NewPostPage() {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-text-light mb-1">URL da imagem de capa</label>
-            <input
-              type="text"
-              value={coverImage}
-              onChange={(e) => setCoverImage(e.target.value)}
-              placeholder="https://..."
-              className="w-full px-4 py-3 rounded-xl border border-beige-dark bg-beige/30 text-sm focus:outline-none focus:ring-2 focus:ring-agua"
-            />
-          </div>
+          <ImageUpload
+            label="Imagem de capa"
+            value={coverImage}
+            onChange={setCoverImage}
+          />
 
-          {/* Tags */}
           <div>
             <label className="block text-sm font-medium text-text-light mb-2">Tags</label>
             <div className="flex flex-wrap gap-2">
@@ -198,7 +189,6 @@ export default function NewPostPage() {
             </div>
           </div>
 
-          {/* Options */}
           <div className="flex flex-wrap gap-4">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -221,7 +211,6 @@ export default function NewPostPage() {
           </div>
         </div>
 
-        {/* Content Blocks */}
         <div className="bg-white rounded-2xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-bold text-text">Conteúdo</h2>
@@ -246,7 +235,7 @@ export default function NewPostPage() {
               <div key={i} className="border border-beige-dark/50 rounded-xl p-4 relative">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-medium text-text-light uppercase">
-                    {block.type === "text" ? "Bloco de texto" : "Bloco de imagem"}
+                    {block.type === "text" ? "Bloco de texto (Markdown)" : "Bloco de imagens"}
                   </span>
                   {contents.length > 1 && (
                     <button
@@ -263,16 +252,13 @@ export default function NewPostPage() {
                     value={block.content}
                     onChange={(e) => updateBlock(i, "content", e.target.value)}
                     rows={6}
-                    placeholder="Escreva o conteúdo do bloco aqui..."
-                    className="w-full px-3 py-2 rounded-lg border border-beige-dark bg-beige/20 text-sm focus:outline-none focus:ring-2 focus:ring-agua resize-y"
+                    placeholder="Escreva o conteúdo aqui. Suporta Markdown: **negrito**, # título, - lista..."
+                    className="w-full px-3 py-2 rounded-lg border border-beige-dark bg-beige/20 text-sm focus:outline-none focus:ring-2 focus:ring-agua resize-y font-mono"
                   />
                 ) : (
-                  <input
-                    type="text"
+                  <ImageBlockUpload
                     value={block.images}
-                    onChange={(e) => updateBlock(i, "images", e.target.value)}
-                    placeholder='URLs das imagens separadas por vírgula (JSON array: ["/img1.jpg","/img2.jpg"])'
-                    className="w-full px-3 py-2 rounded-lg border border-beige-dark bg-beige/20 text-sm focus:outline-none focus:ring-2 focus:ring-agua"
+                    onChange={(v) => updateBlock(i, "images", v)}
                   />
                 )}
               </div>
@@ -280,7 +266,6 @@ export default function NewPostPage() {
           </div>
         </div>
 
-        {/* Save button */}
         <div className="flex justify-end gap-3">
           <Link
             href="/admin/posts"
