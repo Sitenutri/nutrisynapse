@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
-import { FaBrain, FaHeartbeat, FaLeaf, FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { GiMicroscope } from "react-icons/gi";
-import { FiAward, FiGlobe, FiBookOpen, FiHeart } from "react-icons/fi";
+import { FaBrain, FaHeartbeat, FaArrowRight, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { GiMicroscope, GiStomach } from "react-icons/gi";
+import { FiBookOpen, FiCheckCircle } from "react-icons/fi";
 import ScrollReveal from "@/components/ScrollReveal";
 import BlogCard from "@/components/BlogCard";
 import EbookCard from "@/components/EbookCard";
@@ -60,48 +61,52 @@ const specializations = [
 
 const benefits = [
   {
-    icon: FaBrain,
-    title: "Neurociência Aplicada",
+    icon: GiStomach,
+    stat: "70%",
+    statLabel: "das pessoas com diabetes têm disbiose intestinal",
+    title: "Microbiota e Glicemia",
     description:
-      "Entenda como o cérebro regula fome, saciedade e emoções ligadas à alimentação. Protocolos baseados em evidências neurocientíficas.",
-    gradient: "from-agua/20 via-agua-light/30 to-azul-light/20",
-    accent: "bg-agua-dark",
-    iconColor: "text-agua-dark",
-    stat: "90%",
-    statLabel: "da serotonina nasce no intestino",
-  },
-  {
-    icon: FaLeaf,
-    title: "Nutrição Integrativa",
-    description:
-      "Mais de 16 especializações em nutrição — funcional, clínica, estética e fitoterapia — reunidas em uma abordagem completa e personalizada.",
+      "O desequilíbrio da flora intestinal aumenta a inflamação e a resistência à insulina. Mas a boa notícia? É possível modular essa relação por meio da alimentação.",
     gradient: "from-verde/15 via-verde/10 to-agua-light/20",
-    accent: "bg-verde-dark",
     iconColor: "text-verde-dark",
-    stat: "16+",
-    statLabel: "especializações concluídas",
-  },
-  {
-    icon: FaHeartbeat,
-    title: "Psicanálise e Comportamento",
-    description:
-      "Os padrões alimentares têm raízes profundas. A psicanálise ilumina o que dietas sozinhas não conseguem mudar.",
-    gradient: "from-azul/15 via-azul-light/20 to-agua/15",
-    accent: "bg-azul",
-    iconColor: "text-azul",
-    stat: "3",
-    statLabel: "áreas integradas em uma só abordagem",
+    href: "/especialidades/microbiota",
+    cta: "SAIBA MAIS",
   },
   {
     icon: GiMicroscope,
-    title: "Ciência de Ponta",
+    stat: "38 trilhões",
+    statLabel: "de bactérias no seu intestino",
+    title: "Ciência da Microbiota",
     description:
-      "Publicações internacionais, congressos na Irlanda, EUA, França e Argentina. Conhecimento atualizado direto da fonte.",
-    gradient: "from-agua-light/25 via-azul/10 to-verde/15",
-    accent: "bg-agua-dark",
+      "Esse ecossistema vivo influencia desde sua glicemia até seu humor. Aqui você entende como cuidar dele com base em evidências reais, sem modismos.",
+    gradient: "from-agua/20 via-agua-light/30 to-azul-light/20",
     iconColor: "text-agua-dark",
-    stat: "4",
-    statLabel: "países com participação em congressos",
+    href: "/especialidades/microbiota",
+    cta: "SAIBA MAIS",
+  },
+  {
+    icon: FaHeartbeat,
+    stat: "2º",
+    statLabel: "maior causa de morte evitável no Brasil",
+    title: "Diabetes sob Novo Olhar",
+    description:
+      "Vai além da contagem de carboidratos. Entenda os gatilhos emocionais, a neurociência da fome e como o intestino dialoga com seu metabolismo.",
+    gradient: "from-azul/15 via-azul-light/20 to-agua/15",
+    iconColor: "text-azul",
+    href: "/especialidades/diabetes",
+    cta: "SAIBA MAIS",
+  },
+  {
+    icon: FiCheckCircle,
+    stat: "100%",
+    statLabel: "baseado em evidências científicas",
+    title: "Compromisso com a Verdade",
+    description:
+      "Todo conteúdo revisado com fontes públicas e atualizadas. Aqui você encontra o que a ciência já consolidou — e o que ainda está em investigação.",
+    gradient: "from-agua-light/25 via-azul/10 to-verde/15",
+    iconColor: "text-agua-dark",
+    href: "/blog",
+    cta: "LEIA NOSSOS ARTIGOS",
   },
 ];
 
@@ -178,11 +183,11 @@ export default function HomePage() {
           <ScrollReveal>
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="text-3xl sm:text-4xl font-bold text-text">
-                Ciência que cuida da mente e do corpo
+                Do intestino ao cérebro: a ciência que transforma seu diabetes
               </h2>
               <p className="mt-4 text-text-light text-lg leading-relaxed">
-                Uma abordagem integrativa que une neurociência, nutrição e psicanálise para
-                compreender e transformar sua relação com a saúde de forma profunda e duradoura.
+                Dados reais, sem sensacionalismo. Informação verificada para você tomar as
+                rédeas da sua saúde metabólica.
               </p>
             </div>
           </ScrollReveal>
@@ -190,7 +195,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map((benefit, index) => (
               <ScrollReveal key={benefit.title} delay={index * 0.1}>
-                <div className={`relative bg-gradient-to-br ${benefit.gradient} rounded-2xl p-6 hover:shadow-lg transition-all duration-300 h-full overflow-hidden group`}>
+                <div className={`relative bg-gradient-to-br ${benefit.gradient} rounded-2xl p-6 hover:shadow-lg transition-all duration-300 h-full overflow-hidden group flex flex-col`}>
                   {/* Decorative background circle */}
                   <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/20 blur-xl group-hover:scale-150 transition-transform duration-500" />
                   <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-white/10 blur-lg" />
@@ -207,7 +212,15 @@ export default function HomePage() {
                   </div>
 
                   <h3 className="relative text-base font-bold text-text mb-2">{benefit.title}</h3>
-                  <p className="relative text-sm text-text-light leading-relaxed">{benefit.description}</p>
+                  <p className="relative text-sm text-text-light leading-relaxed flex-1">{benefit.description}</p>
+
+                  <Link
+                    href={benefit.href}
+                    className={`relative mt-5 inline-flex items-center gap-1.5 text-xs font-bold tracking-wider ${benefit.iconColor} hover:gap-2 transition-all`}
+                  >
+                    {benefit.cta}
+                    <FaArrowRight className="text-[0.65rem]" />
+                  </Link>
                 </div>
               </ScrollReveal>
             ))}
@@ -330,123 +343,85 @@ export default function HomePage() {
       </ScrollReveal>
 
       {/* ============================================================ */}
-      {/*  ABOUT BIBI                                                   */}
+      {/*  ABOUT ME                                                     */}
       {/* ============================================================ */}
       <section className="py-16 sm:py-24 bg-beige overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="text-center mb-12">
               <span className="inline-block bg-agua-dark/10 text-agua-dark text-sm font-medium px-4 py-1.5 rounded-full mb-4">
-                Quem é a Bibi
+                Quem sou eu
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-text">
-                Sobre a Bibi
+                Sobre Mim
               </h2>
               <p className="text-center text-text-light mt-2">
-                Roselis N. Mazzuchetti — a mente por trás do NutriSynapse
+                ROSELIS N. MAZZUCHETTI (BIBI)
               </p>
             </div>
           </ScrollReveal>
 
           <div className="max-w-5xl mx-auto space-y-6">
-            {/* Top: bio + stats */}
-            <div className="grid md:grid-cols-3 gap-6">
-              {/* Bio card */}
-              <ScrollReveal>
-                <div className="md:col-span-2 bg-white rounded-3xl p-6 sm:p-8 shadow-sm h-full">
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-agua/30 to-azul-light/40 flex items-center justify-center">
-                      <FaBrain className="w-6 h-6 text-agua-dark" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-text">Roselis N. Mazzuchetti</p>
-                      <p className="text-xs text-text-light">Nutricionista · Psicanalista · Pesquisadora</p>
-                    </div>
-                  </div>
-
-                  <div className="text-text-light leading-relaxed space-y-4 text-sm sm:text-base">
-                    <p>
-                      A trajetória da Bibi é singular: antes de se tornar nutricionista, ela construiu uma
-                      carreira acadêmica robusta — <strong className="text-text">Mestrado, Doutorado e Pós-Doutorado em Gestão</strong> —
-                      além de formação completa em Psicanálise. Foi esse percurso multidisciplinar que
-                      plantou as sementes de uma visão verdadeiramente integrativa da saúde.
-                    </p>
-                    <p>
-                      Ao mergulhar na Nutrição, acumulou <strong className="text-text">mais de 16 especializações</strong> em
-                      áreas que poucos nutricionistas combinam: neurociência, fitoterapia, gastronomia
-                      funcional, neuropsicanálise e neuromarketing. Essa amplitude não é acidental —
-                      é a expressão de sua crença de que saúde é um sistema, não um conjunto de sintomas isolados.
-                    </p>
-                    <p>
-                      Hoje, a Bibi é especialista em <strong className="text-text">neurociência do comportamento alimentar</strong>,
-                      com foco clínico em <strong className="text-text">diabetes</strong> e{" "}
-                      <strong className="text-text">microbiota intestinal</strong>. Ela entende que a relação com a
-                      comida envolve circuitos cerebrais de recompensa, padrões emocionais inconscientes
-                      e o ecossistema vivo que habita o intestino — e trabalha em todos esses níveis.
-                    </p>
-                    <p>
-                      Participou de congressos internacionais na <strong className="text-text">Irlanda, Estados Unidos, França e
-                      Argentina</strong>, publicou pesquisas e mantém-se na fronteira do conhecimento para
-                      traduzir ciência de ponta em cuidado prático e humano.
-                    </p>
+            {/* Top: photo + bio */}
+            <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
+              {/* Photo */}
+              <ScrollReveal className="lg:col-span-2">
+                <div className="lg:sticky lg:top-24">
+                  <div className="relative aspect-[3/4] rounded-3xl overflow-hidden shadow-sm bg-gradient-to-br from-agua/15 to-azul-light/25 max-w-sm mx-auto lg:max-w-none">
+                    <Image
+                      src="/Bibi.png"
+                      alt="Roselis N. Mazzuchetti (Bibi)"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 384px, 40vw"
+                    />
                   </div>
                 </div>
               </ScrollReveal>
 
-              {/* Stats column */}
-              <div className="space-y-4">
-                <ScrollReveal delay={0.1}>
-                  <div className="bg-gradient-to-br from-agua/20 to-agua-light/30 rounded-2xl p-5 shadow-sm">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 rounded-xl bg-white/70 flex items-center justify-center">
-                        <FiAward className="w-5 h-5 text-agua-dark" />
-                      </div>
-                      <span className="text-3xl font-extrabold text-agua-dark">16+</span>
+              {/* Bio card */}
+              <ScrollReveal delay={0.1} className="lg:col-span-3">
+                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-agua/30 to-azul-light/40 flex items-center justify-center flex-shrink-0">
+                      <FaBrain className="w-6 h-6 text-agua-dark" />
                     </div>
-                    <p className="text-sm font-medium text-text">Especializações</p>
-                    <p className="text-xs text-text-light mt-1">Concluídas e em andamento desde 2024</p>
+                    <div className="min-w-0">
+                      <p className="font-bold text-text">ROSELIS N. MAZZUCHETTI (BIBI)</p>
+                      <p className="text-xs text-text-light">Nutricionista · Psicanalista · Pesquisadora</p>
+                    </div>
                   </div>
-                </ScrollReveal>
 
-                <ScrollReveal delay={0.15}>
-                  <div className="bg-gradient-to-br from-verde/20 to-verde/10 rounded-2xl p-5 shadow-sm">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 rounded-xl bg-white/70 flex items-center justify-center">
-                        <FiGlobe className="w-5 h-5 text-verde-dark" />
-                      </div>
-                      <span className="text-3xl font-extrabold text-verde-dark">4</span>
-                    </div>
-                    <p className="text-sm font-medium text-text">Países</p>
-                    <p className="text-xs text-text-light mt-1">Irlanda, EUA, França e Argentina</p>
-                  </div>
-                </ScrollReveal>
+                  <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-text mb-4 leading-snug">
+                    Diabetes, Intestino e Alma: Uma Jornada de Quem Acredita que Saúde se
+                    Constrói com Verdade
+                  </h3>
 
-                <ScrollReveal delay={0.2}>
-                  <div className="bg-gradient-to-br from-azul/20 to-azul-light/30 rounded-2xl p-5 shadow-sm">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 rounded-xl bg-white/70 flex items-center justify-center">
-                        <FiHeart className="w-5 h-5 text-azul" />
-                      </div>
-                      <span className="text-3xl font-extrabold text-azul">3</span>
-                    </div>
-                    <p className="text-sm font-medium text-text">Pilares integrados</p>
-                    <p className="text-xs text-text-light mt-1">Neurociência, Nutrição e Psicanálise</p>
+                  <div className="text-text-light leading-relaxed space-y-4 text-sm sm:text-base">
+                    <p>
+                      Minha história é feita de encontros. Comecei nos números e na estratégia,
+                      passei pela gestão, psicanálise e pela docência de alto nível (com
+                      mestrado, doutorado e pós-doutorado), e hoje me dedico a um tema que me
+                      move: como o intestino, o cérebro e a alimentação conversam para
+                      influenciar o diabetes e a saúde integral.
+                    </p>
+                    <p>
+                      Não sou &quot;a especialista que sabe tudo&quot;. Sou uma eterna estudante,
+                      com mais de dez especializações em nutrição e neurociência, que acredita
+                      que o rigor científico e a sensibilidade humana podem andar juntos.
+                    </p>
+                    <p>
+                      Meu trabalho é garimpar o que há de mais sólido na literatura
+                      internacional, conectar com a realidade brasileira e transformar isso em
+                      e-books, artigos e materiais que você consegue aplicar no dia a dia — sem
+                      modismo, sem medo, sem mentira.
+                    </p>
+                    <p>
+                      Porque saúde metabólica merece clareza. E você merece confiança.
+                    </p>
                   </div>
-                </ScrollReveal>
-
-                <ScrollReveal delay={0.25}>
-                  <div className="bg-gradient-to-br from-agua-dark/15 to-azul/15 rounded-2xl p-5 shadow-sm">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 rounded-xl bg-white/70 flex items-center justify-center">
-                        <FiBookOpen className="w-5 h-5 text-agua-dark" />
-                      </div>
-                      <span className="text-3xl font-extrabold text-agua-dark">PhD</span>
-                    </div>
-                    <p className="text-sm font-medium text-text">Formação acadêmica</p>
-                    <p className="text-xs text-text-light mt-1">Mestrado, Doutorado e Pós-Doutorado</p>
-                  </div>
-                </ScrollReveal>
-              </div>
+                </div>
+              </ScrollReveal>
             </div>
 
             {/* Core focus areas */}
@@ -488,32 +463,13 @@ export default function HomePage() {
               </div>
             </ScrollReveal>
 
-            {/* Academic trajectory timeline */}
+            {/* Recent specializations */}
             <ScrollReveal delay={0.15}>
               <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm">
                 <h3 className="text-lg font-bold text-text mb-6 flex items-center gap-2">
                   <FiBookOpen className="text-agua-dark" />
-                  Trajetória Acadêmica e Especializações
+                  Especializações recentes
                 </h3>
-
-                {/* Timeline mini */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 pb-6 border-b border-beige-dark/40">
-                  <div className="flex flex-col items-center text-center p-4 bg-beige/40 rounded-xl">
-                    <span className="text-xs font-bold text-agua-dark uppercase tracking-wider mb-1">Fundação</span>
-                    <p className="text-sm font-semibold text-text">Contabilidade, Administração</p>
-                    <p className="text-xs text-text-light mt-1">Mestrado · Doutorado · Pós-Doc em Gestão</p>
-                  </div>
-                  <div className="flex flex-col items-center text-center p-4 bg-beige/40 rounded-xl">
-                    <span className="text-xs font-bold text-azul uppercase tracking-wider mb-1">Expansão</span>
-                    <p className="text-sm font-semibold text-text">Psicanálise Clínica</p>
-                    <p className="text-xs text-text-light mt-1">Formação completa + Neuropsicanálise</p>
-                  </div>
-                  <div className="flex flex-col items-center text-center p-4 bg-beige/40 rounded-xl">
-                    <span className="text-xs font-bold text-verde-dark uppercase tracking-wider mb-1">Presente</span>
-                    <p className="text-sm font-semibold text-text">Nutrição (16+ especializações)</p>
-                    <p className="text-xs text-text-light mt-1">Foco em neurociência, diabetes e microbiota</p>
-                  </div>
-                </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
                   {specializations.map((spec) => (
@@ -525,6 +481,19 @@ export default function HomePage() {
                       <span>{spec}</span>
                     </div>
                   ))}
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-beige-dark/40 text-text-light leading-relaxed text-sm sm:text-base">
+                  <p>
+                    Por que tanta especialização? Porque acredito que{" "}
+                    <strong className="text-text">cuidar das pessoas exige profundidade e rigor</strong>.
+                    Minha formação anterior, rica e diversificada – incluindo Teologia,
+                    Neurociência e Psicologia – não foi deixada para trás; ela se{" "}
+                    <em>fundiu</em> a essa nova paixão. Trago uma visão única,{" "}
+                    <strong className="text-text">holística e integrativa</strong>, para a
+                    Nutrição. Entendo que o alimento vai muito além do físico: toca a mente,
+                    as emoções e até a espiritualidade.
+                  </p>
                 </div>
               </div>
             </ScrollReveal>
@@ -542,14 +511,14 @@ export default function HomePage() {
               Quer saber mais ou tirar dúvidas?
             </h2>
             <p className="mt-4 text-white/80 text-lg max-w-xl mx-auto">
-              Fale com a Bibi. Ela adora conversar sobre neurociência, nutrição e tudo que conecta
+              Fale conosco. Adoramos conversar sobre neurociência, nutrição e tudo que conecta
               mente e corpo.
             </p>
             <Link
               href="/contato"
               className="mt-10 inline-flex items-center gap-2 px-8 py-4 bg-white text-agua-dark font-semibold rounded-2xl shadow-lg hover:bg-beige hover:shadow-xl transition-all duration-300"
             >
-              Fale com a Bibi
+              Fale conosco
               <FaArrowRight className="text-sm" />
             </Link>
           </ScrollReveal>

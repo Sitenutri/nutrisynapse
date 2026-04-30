@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -21,9 +22,19 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold text-agua-dark">Nutri</span>
-            <span className="text-xl font-bold text-text">Synapse</span>
+          <Link href="/" className="flex items-center gap-2.5" aria-label="NutriSynapse">
+            <Image
+              src="/logo-nutrisinapse.png"
+              alt=""
+              width={48}
+              height={48}
+              priority
+              className="h-10 w-10 object-contain"
+            />
+            <span className="text-xl font-bold leading-none">
+              <span className="text-agua-dark">Nutri</span>
+              <span className="text-text">Synapse</span>
+            </span>
           </Link>
 
           {/* Desktop Nav */}

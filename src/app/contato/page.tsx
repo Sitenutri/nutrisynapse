@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
-import { FiMail, FiInstagram, FiYoutube, FiSend, FiCheck } from "react-icons/fi";
+import { FiMail, FiInstagram, FiYoutube, FiFacebook, FiSend, FiCheck } from "react-icons/fi";
 import ScrollReveal from "@/components/ScrollReveal";
 
 export default function ContatoPage() {
@@ -37,7 +37,7 @@ export default function ContatoPage() {
         <ScrollReveal>
           <div className="text-center mb-12">
             <h1 className="text-4xl sm:text-5xl font-bold text-text mb-4">
-              Fale com a <span className="text-agua-dark">Bibi</span>
+              Fale <span className="text-agua-dark">conosco</span>
             </h1>
             <p className="text-lg text-text-light max-w-2xl mx-auto">
               Tem alguma dúvida, sugestão ou quer conversar sobre neurociência,
@@ -163,13 +163,13 @@ export default function ContatoPage() {
                 <h3 className="text-lg font-bold text-text mb-4">Informações de contato</h3>
                 <div className="space-y-4">
                   <a
-                    href="mailto:contato@nutrisynapse.com"
+                    href="mailto:nutrisynapse01@gmail.com"
                     className="flex items-center gap-3 text-text-light hover:text-agua-dark transition-colors group"
                   >
                     <div className="w-10 h-10 rounded-full bg-agua/10 flex items-center justify-center group-hover:bg-agua/20 transition-colors">
                       <FiMail className="w-5 h-5 text-agua-dark" />
                     </div>
-                    <span className="text-sm">contato@nutrisynapse.com</span>
+                    <span className="text-sm">nutrisynapse01@gmail.com</span>
                   </a>
                 </div>
               </div>
@@ -189,13 +189,24 @@ export default function ContatoPage() {
                     <span className="text-sm">@nutrisynapse</span>
                   </a>
                   <a
-                    href="https://youtube.com/@nutrisynapse"
+                    href="https://www.youtube.com/@Nutrisynapse-j1v"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 text-text-light hover:text-agua-dark transition-colors group"
                   >
                     <div className="w-10 h-10 rounded-full bg-agua/10 flex items-center justify-center group-hover:bg-agua/20 transition-colors">
                       <FiYoutube className="w-5 h-5 text-agua-dark" />
+                    </div>
+                    <span className="text-sm">@Nutrisynapse-j1v</span>
+                  </a>
+                  <a
+                    href="https://www.facebook.com/profile.php?id=61578372230723"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 text-text-light hover:text-agua-dark transition-colors group"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-agua/10 flex items-center justify-center group-hover:bg-agua/20 transition-colors">
+                      <FiFacebook className="w-5 h-5 text-agua-dark" />
                     </div>
                     <span className="text-sm">NutriSynapse</span>
                   </a>

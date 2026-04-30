@@ -30,7 +30,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-3">Contato</h4>
             <p className="text-sm text-white/80">
-              Fale com a Bibi para saber mais sobre nossos conteúdos e serviços.
+              Fale conosco para saber mais sobre nosso conteúdo.
             </p>
             <Link
               href="/contato"
@@ -41,8 +41,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/20 mt-8 pt-6 text-center text-xs text-white/60">
-          © {new Date().getFullYear()} NutriSynapse — Todos os direitos reservados.
+        <div className="border-t border-white/20 mt-8 pt-6 space-y-3 text-center">
+          <p className="text-xs italic text-white/70 max-w-3xl mx-auto leading-relaxed">
+            O conteúdo deste site tem caráter educativo e informativo. Não substitui o
+            diagnóstico, tratamento ou acompanhamento médico e nutricional individualizado.
+          </p>
+          <p className="text-xs text-white/60">
+            © {new Date().getFullYear()} NutriSynapse — Todos os direitos reservados.
+          </p>
         </div>
       </div>
     </footer>

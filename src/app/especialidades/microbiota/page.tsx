@@ -5,7 +5,7 @@ import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
 import EbookCard from "@/components/EbookCard";
 import {
-  FiCreditCard, FiSmartphone, FiFileText, FiGift, FiShield, FiArrowRight, FiCheckCircle, FiBookOpen,
+  FiGift, FiArrowRight, FiCheckCircle, FiBookOpen,
 } from "react-icons/fi";
 import { FaBrain, FaLeaf, FaHeartbeat } from "react-icons/fa";
 import { GiMicroscope, GiStomach } from "react-icons/gi";
@@ -227,38 +227,6 @@ export default function MicrobiotaPage() {
               </div>
             </ScrollReveal>
           )}
-        </div>
-      </section>
-
-      {/* Payment Info */}
-      <section className="py-10 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto">
-          <ScrollReveal>
-            <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm text-center">
-              <h3 className="text-xl font-bold text-text mb-3">Formas de Pagamento</h3>
-              <p className="text-text-light text-sm mb-6">
-                Todas as compras são processadas de forma segura via Kiwify.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <div className="flex items-center gap-2 bg-beige px-4 py-2.5 rounded-xl">
-                  <FiCreditCard className="w-5 h-5 text-verde-dark" />
-                  <span className="text-sm font-medium text-text">Cartão de Crédito</span>
-                </div>
-                <div className="flex items-center gap-2 bg-beige px-4 py-2.5 rounded-xl">
-                  <FiSmartphone className="w-5 h-5 text-verde-dark" />
-                  <span className="text-sm font-medium text-text">Pix</span>
-                </div>
-                <div className="flex items-center gap-2 bg-beige px-4 py-2.5 rounded-xl">
-                  <FiFileText className="w-5 h-5 text-verde-dark" />
-                  <span className="text-sm font-medium text-text">Boleto Bancário</span>
-                </div>
-              </div>
-              <p className="text-xs text-text-light mt-4 flex items-center justify-center gap-1">
-                <FiShield className="w-3.5 h-3.5" />
-                Pagamento 100% seguro. Acesso imediato após confirmação.
-              </p>
-            </div>
-          </ScrollReveal>
         </div>
       </section>
 
