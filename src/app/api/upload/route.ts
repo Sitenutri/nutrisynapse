@@ -25,13 +25,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "filename and contentType are required" }, { status: 400 });
   }
 
-  const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"];
-  if (!allowedTypes.includes(contentType)) {
+  const allowedImages = ["image/jpeg", "image/png", "image/webp", "image/gif", "image/svg+xml"];
+  const allowedDocs = ["application/pdf"];
+  const isImage = allowedImages.includes(contentType);
+  const isPdf = allowedDocs.includes(contentType);
+  if (!isImage && !isPdf) {
     return NextResponse.json({ error: "Tipo de arquivo não permitido" }, { status: 400 });
   }
 
-  const ext = filename.split(".").pop()?.toLowerCase() ?? "jpg";
-  const key = `uploads/${randomUUID()}.${ext}`;
+  const ext = filename.split(".").pop()?.toLowerCase() ?? (isPdf ? "pdf" : "jpg");
+  const folder = isPdf ? "imports" : "uploads";
+  const key = `${folder}/${randomUUID()}.${ext}`;
   const bucket = process.env.AWS_S3_BUCKET!;
 
   const command = new PutObjectCommand({

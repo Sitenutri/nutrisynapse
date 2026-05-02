@@ -47,3 +47,7 @@ terraform/.terraform/
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 terraform/*.tfstate*
+
+# scratch / local-only
+tmp/
+artigos/

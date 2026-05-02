@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useParams } from "next/navigation";
-import { FiPlus, FiTrash2, FiSave, FiArrowLeft } from "react-icons/fi";
+import { FiPlus, FiTrash2, FiSave, FiArrowLeft, FiEye, FiEdit3 } from "react-icons/fi";
 import Link from "next/link";
 import ImageUpload from "@/components/ImageUpload";
 import ImageBlockUpload from "@/components/ImageBlockUpload";
+import ArticlePreview from "@/components/ArticlePreview";
 
 interface Tag {
   id: string;
@@ -37,6 +38,7 @@ export default function EditPostPage() {
   const [featured, setFeatured] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [contents, setContents] = useState<ContentBlock[]>([]);
+  const [preview, setPreview] = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/admin/login");
@@ -134,16 +136,40 @@ export default function EditPostPage() {
 
   return (
     <div className="max-w-4xl">
-      <div className="flex items-center gap-4 mb-6">
-        <Link href="/admin/posts" className="p-2 rounded-lg hover:bg-beige transition-colors">
-          <FiArrowLeft className="w-5 h-5 text-text-light" />
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-text">Editar Post</h1>
-          <p className="text-text-light text-sm mt-0.5">Atualize o artigo</p>
+      <div className="flex items-center justify-between gap-3 mb-6">
+        <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+          <Link href="/admin/posts" className="p-2 rounded-lg hover:bg-beige transition-colors flex-shrink-0">
+            <FiArrowLeft className="w-5 h-5 text-text-light" />
+          </Link>
+          <div className="min-w-0">
+            <h1 className="text-xl sm:text-2xl font-bold text-text truncate">
+              {preview ? "Visualizar artigo" : "Editar Post"}
+            </h1>
+            <p className="text-text-light text-xs sm:text-sm mt-0.5 truncate">
+              {preview ? "Como aparecerá no blog" : "Atualize o artigo"}
+            </p>
+          </div>
         </div>
+        <button
+          type="button"
+          onClick={() => setPreview((p) => !p)}
+          className="flex-shrink-0 inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl border border-agua/40 text-sm font-medium text-agua-dark bg-white hover:bg-agua/5 transition-colors"
+          aria-label={preview ? "Voltar para edição" : "Visualizar"}
+        >
+          {preview ? <FiEdit3 className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
+          <span className="hidden sm:inline">{preview ? "Voltar pra edição" : "Visualizar"}</span>
+        </button>
       </div>
 
+      {preview ? (
+        <ArticlePreview
+          title={title}
+          description={description}
+          coverImage={coverImage}
+          contents={contents}
+          tags={tags.filter((t) => selectedTags.includes(t.id))}
+        />
+      ) : (
       <div className="space-y-6">
         <div className="bg-white rounded-2xl p-6 shadow-sm space-y-4">
           <h2 className="font-bold text-text">Informações básicas</h2>
@@ -295,6 +321,7 @@ export default function EditPostPage() {
           </button>
         </div>
       </div>
+      )}
     </div>
   );
 }

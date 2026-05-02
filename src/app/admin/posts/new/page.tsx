@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { FiPlus, FiTrash2, FiSave, FiArrowLeft } from "react-icons/fi";
+import { FiPlus, FiTrash2, FiSave, FiArrowLeft, FiCheckCircle, FiX, FiEye, FiEdit3 } from "react-icons/fi";
 import Link from "next/link";
 import slugify from "slugify";
 import ImageUpload from "@/components/ImageUpload";
 import ImageBlockUpload from "@/components/ImageBlockUpload";
+import PdfImport from "@/components/PdfImport";
+import ArticlePreview from "@/components/ArticlePreview";
 
 interface Tag {
   id: string;
@@ -32,12 +34,26 @@ export default function NewPostPage() {
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [coverImage, setCoverImage] = useState("");
-  const [published, setPublished] = useState(false);
+  const [published, setPublished] = useState(true);
   const [featured, setFeatured] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [contents, setContents] = useState<ContentBlock[]>([
     { type: "text", content: "", images: "", order: 0 },
   ]);
+  const [importSummary, setImportSummary] = useState<{
+    blockCount: number;
+    imageCount: number;
+  } | null>(null);
+  const [preview, setPreview] = useState(false);
+
+  useEffect(() => {
+    if (!importSummary) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setImportSummary(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [importSummary]);
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/admin/login");
@@ -114,17 +130,110 @@ export default function NewPostPage() {
 
   return (
     <div className="max-w-4xl">
-      <div className="flex items-center gap-4 mb-6">
-        <Link href="/admin/posts" className="p-2 rounded-lg hover:bg-beige transition-colors">
-          <FiArrowLeft className="w-5 h-5 text-text-light" />
-        </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-text">Novo Post</h1>
-          <p className="text-text-light text-sm mt-0.5">Crie um novo artigo para o blog</p>
+      {importSummary && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fade-in"
+          onClick={() => setImportSummary(null)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative animate-fade-in-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setImportSummary(null)}
+              aria-label="Fechar"
+              className="absolute top-4 right-4 p-1.5 rounded-lg text-text-light hover:bg-beige transition-colors"
+            >
+              <FiX className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-verde/15 flex items-center justify-center">
+                <FiCheckCircle className="w-6 h-6 text-verde-dark" />
+              </div>
+              <div className="flex-1 pt-1">
+                <h3 className="text-lg font-bold text-text mb-1">Artigo importado</h3>
+                <p className="text-sm text-text-light leading-relaxed">
+                  {importSummary.blockCount} bloco(s) de conteúdo gerado(s)
+                  {importSummary.imageCount > 0
+                    ? `, ${importSummary.imageCount} imagem(ns) extraída(s) do PDF`
+                    : " (sem imagens)"}
+                  . Revise abaixo antes de publicar.
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setImportSummary(null)}
+              className="mt-5 w-full px-4 py-2.5 bg-agua-dark text-white text-sm font-medium rounded-xl hover:bg-agua transition-colors"
+            >
+              Revisar conteúdo
+            </button>
+          </div>
         </div>
+      )}
+
+      <div className="flex items-center justify-between gap-3 mb-6">
+        <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+          <Link href="/admin/posts" className="p-2 rounded-lg hover:bg-beige transition-colors flex-shrink-0">
+            <FiArrowLeft className="w-5 h-5 text-text-light" />
+          </Link>
+          <div className="min-w-0">
+            <h1 className="text-xl sm:text-2xl font-bold text-text truncate">
+              {preview ? "Visualizar artigo" : "Novo Post"}
+            </h1>
+            <p className="text-text-light text-xs sm:text-sm mt-0.5 truncate">
+              {preview ? "Como aparecerá no blog" : "Crie um novo artigo para o blog"}
+            </p>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={() => setPreview((p) => !p)}
+          className="flex-shrink-0 inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl border border-agua/40 text-sm font-medium text-agua-dark bg-white hover:bg-agua/5 transition-colors"
+          aria-label={preview ? "Voltar para edição" : "Visualizar"}
+        >
+          {preview ? <FiEdit3 className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
+          <span className="hidden sm:inline">{preview ? "Voltar pra edição" : "Visualizar"}</span>
+        </button>
       </div>
 
+      {preview ? (
+        <ArticlePreview
+          title={title}
+          description={description}
+          coverImage={coverImage}
+          contents={contents}
+          tags={tags.filter((t) => selectedTags.includes(t.id))}
+        />
+      ) : (
       <div className="space-y-6">
+        <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <h2 className="font-bold text-text mb-3">Importar artigo de PDF</h2>
+          <PdfImport
+            onImported={(data) => {
+              const blocks = data.contents.map((c, i) => ({
+                type: c.type,
+                content: c.content ?? "",
+                images: c.images ?? "",
+                order: i,
+              }));
+              setTitle(data.title);
+              setSlug(data.slug);
+              setDescription(data.description);
+              setContents(blocks);
+              setImportSummary({
+                blockCount: blocks.length,
+                imageCount: data.extractedImageCount,
+              });
+            }}
+          />
+        </div>
+
         <div className="bg-white rounded-2xl p-6 shadow-sm space-y-4">
           <h2 className="font-bold text-text">Informações básicas</h2>
 
@@ -283,6 +392,7 @@ export default function NewPostPage() {
           </button>
         </div>
       </div>
+      )}
     </div>
   );
 }

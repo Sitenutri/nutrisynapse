@@ -245,15 +245,26 @@ export default function BlogPostPage() {
 
             if (block.type === "image" && block.images) {
               const imgs: string[] = JSON.parse(block.images);
+
+              if (imgs.length === 1) {
+                return (
+                  <ScrollReveal key={block.id} delay={i * 0.03}>
+                    <figure className="mb-8 flex justify-center">
+                      <img
+                        src={imgs[0]}
+                        alt={`Imagem do artigo`}
+                        className="rounded-xl shadow-sm max-h-[640px] max-w-full w-auto h-auto"
+                      />
+                    </figure>
+                  </ScrollReveal>
+                );
+              }
+
               return (
                 <ScrollReveal key={block.id} delay={i * 0.03}>
                   <div
                     className={`grid gap-4 mb-8 ${
-                      imgs.length === 1
-                        ? ""
-                        : imgs.length === 2
-                          ? "grid-cols-2"
-                          : "grid-cols-2 sm:grid-cols-3"
+                      imgs.length === 2 ? "grid-cols-2" : "grid-cols-2 sm:grid-cols-3"
                     }`}
                   >
                     {imgs.map((src, ii) => (
@@ -261,7 +272,7 @@ export default function BlogPostPage() {
                         key={ii}
                         src={src}
                         alt={`Imagem ${ii + 1} do artigo`}
-                        className="w-full rounded-xl shadow-sm object-cover"
+                        className="w-full aspect-square rounded-xl shadow-sm object-cover"
                       />
                     ))}
                   </div>
