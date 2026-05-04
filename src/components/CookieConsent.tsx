@@ -2,18 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { COOKIE_CONSENT_KEY } from "@/lib/analytics";
 
 export default function CookieConsent() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem("cookie-consent");
+    const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
     if (!consent) setShow(true);
   }, []);
 
   const accept = () => {
-    localStorage.setItem("cookie-consent", "accepted");
+    localStorage.setItem(COOKIE_CONSENT_KEY, "accepted");
     setShow(false);
+    // Notify GoogleAnalytics component that consent was granted
+    window.dispatchEvent(new Event("cookie-consent-granted"));
   };
 
   return (

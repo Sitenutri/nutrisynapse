@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import {
   SITE_NAME,
   SITE_DESCRIPTION,
@@ -149,6 +150,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer />
         <CookieConsent />
+        <GoogleAnalytics />
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ScrollReveal from "@/components/ScrollReveal";
 import EbookCard from "@/components/EbookCard";
 import { FiGift, FiBookOpen } from "react-icons/fi";
+import { trackLeadMagnet } from "@/lib/analytics";
 
 interface Ebook {
   id: string;
@@ -42,6 +43,7 @@ export default function DiabetesClient() {
         setLeadStatus("success");
         setName("");
         setEmail("");
+        trackLeadMagnet("checklist-seguranca-diabetes");
       } else {
         setLeadStatus("error");
       }

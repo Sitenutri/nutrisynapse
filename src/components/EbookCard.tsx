@@ -1,5 +1,8 @@
+"use client";
+
 import { FiBook, FiBookOpen } from "react-icons/fi";
 import { FaBrain } from "react-icons/fa";
+import { trackEbookDownload } from "@/lib/analytics";
 
 interface EbookCardProps {
   title: string;
@@ -149,6 +152,7 @@ export default function EbookCard({
           href={buyLink || "#"}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackEbookDownload(title, buyLink || "#")}
           className="mt-4 block text-center px-6 py-3 bg-agua-dark text-white text-sm font-medium rounded-xl hover:bg-agua transition-colors"
         >
           Comprar agora

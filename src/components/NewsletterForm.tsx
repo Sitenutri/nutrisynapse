@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { trackNewsletterSignup } from "@/lib/analytics";
 
 export default function NewsletterForm() {
   const [name, setName] = useState("");
@@ -20,6 +21,7 @@ export default function NewsletterForm() {
         setStatus("success");
         setName("");
         setEmail("");
+        trackNewsletterSignup();
       } else {
         setStatus("error");
       }

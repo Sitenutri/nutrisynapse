@@ -9,6 +9,7 @@ import {
 } from "react-icons/fi";
 import { FaBrain, FaLeaf, FaHeartbeat } from "react-icons/fa";
 import { GiMicroscope, GiStomach } from "react-icons/gi";
+import { trackLeadMagnet } from "@/lib/analytics";
 
 const sections = [
   {
@@ -89,6 +90,7 @@ export default function MicrobiotaClient() {
         setLeadStatus("success");
         setName("");
         setEmail("");
+        trackLeadMagnet("guia-probioticos-microbiota");
       } else {
         setLeadStatus("error");
       }

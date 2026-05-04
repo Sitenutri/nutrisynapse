@@ -4,6 +4,7 @@ import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { FiMail, FiInstagram, FiYoutube, FiFacebook, FiSend, FiCheck } from "react-icons/fi";
 import ScrollReveal from "@/components/ScrollReveal";
+import { trackContactSubmit } from "@/lib/analytics";
 
 export default function ContatoClient() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
@@ -21,6 +22,7 @@ export default function ContatoClient() {
       });
       if (res.ok) {
         setSubmitted(true);
+        trackContactSubmit(form.subject);
       }
     } catch {
       // fall through to show success anyway (graceful)
