@@ -73,7 +73,7 @@ export default function EbookCard({
   return (
     <div className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
       {/* Cover */}
-      <div className={`h-52 bg-gradient-to-br ${theme.gradient} flex items-center justify-center relative overflow-hidden`}>
+      <div className={`h-[250px] bg-gradient-to-br ${theme.gradient} flex items-center justify-center relative overflow-hidden`}>
         {coverImage ? (
           <img src={coverImage} alt={title} className="w-full h-full object-cover" />
         ) : (
@@ -133,11 +133,6 @@ export default function EbookCard({
         <h3 className="font-bold text-text text-lg leading-snug">{title}</h3>
         <p className="text-sm text-text-light mt-2 line-clamp-3 flex-1">{description}</p>
 
-        {targetAudience && (
-          <p className="text-xs text-agua-dark mt-3 bg-agua/10 px-3 py-1.5 rounded-lg">
-            Público: {targetAudience}
-          </p>
-        )}
 
         <div className="mt-4 flex items-center gap-3">
           {originalPrice && (

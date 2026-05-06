@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { notifyNewsletter } from "@/lib/mail";
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,6 +16,11 @@ export async function POST(req: NextRequest) {
     }
 
     await prisma.newsletter.create({ data: { name, email } });
+
+    // Notify via email (non-blocking — don't fail the request if email fails)
+    notifyNewsletter(name, email).catch((err) =>
+      console.error("[newsletter] Email notification failed:", err)
+    );
 
     return NextResponse.json({ message: "Inscrito com sucesso!" }, { status: 201 });
   } catch {

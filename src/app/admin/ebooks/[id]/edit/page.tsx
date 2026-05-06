@@ -191,16 +191,6 @@ export default function EditEbookPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-text-light mb-1">Público-alvo</label>
-            <input
-              type="text"
-              value={targetAudience}
-              onChange={(e) => setTargetAudience(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-beige-dark bg-beige/30 text-sm focus:outline-none focus:ring-2 focus:ring-agua"
-            />
-          </div>
-
-          <div>
             <label className="block text-sm font-medium text-text-light mb-1">Link de compra (Kiwify)</label>
             <input
               type="text"

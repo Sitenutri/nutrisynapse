@@ -66,18 +66,29 @@ export default function EbooksClient() {
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
             <p className="text-lg text-agua-dark font-medium mb-6">
-              Descubra a revolução do autocuidado, onde ciência e afeto se entrelaçam!
+              Você não precisa de mais tentativas. Precisa de um método que funcione.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.2}>
             <div className="text-text-light leading-relaxed space-y-4 text-base sm:text-lg">
               <p>
-                Nossos e-books são mais que guias: são abraços em forma de conhecimento, fundindo
-                neurociência e nutrição com sensibilidade.
+                Esses e-books foram criados para quem busca resultado com inteligência, não
+                soluções aleatórias.
               </p>
               <p>
-                Cada página foi tecida para honrar seu corpo, sua mente e sua história,
-                transformando prevenção em um ato diário de amor.
+                Cada material traduz ciência em prática, com orientações objetivas que cabem
+                na sua rotina e geram impacto real no seu corpo.
+              </p>
+              <p>
+                Sem promessas irreais. Sem excesso de regras.
+              </p>
+              <p>
+                Apenas o essencial, bem estruturado — para funcionar.
+                Escolha por onde começar. Seu corpo responde quando você aplica o que
+                realmente importa.
+              </p>
+              <p className="text-agua-dark font-semibold text-xl mt-2">
+                👇 Acesse os conteúdos
               </p>
             </div>
           </ScrollReveal>

@@ -77,7 +77,7 @@ export default function BlogCard({ slug, title, description, coverImage, created
         {/* Cover */}
         <div
           className={`bg-gradient-to-br ${theme.gradient} flex items-center justify-center relative overflow-hidden ${
-            featured ? "md:w-1/2 h-52 md:h-auto" : "h-44"
+            featured ? "md:w-1/2 h-[250px] md:h-auto" : "h-[250px]"
           }`}
         >
           {coverImage ? (

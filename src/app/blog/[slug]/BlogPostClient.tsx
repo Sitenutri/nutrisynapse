@@ -296,18 +296,18 @@ export default function BlogPostClient() {
             </div>
             <div>
               <p className="font-bold text-text text-lg">
-                Bibi (Roselis N. Mazzuchetti)
+                Roselis N. Mazzuchetti (Bibi)
               </p>
               <p className="text-sm text-text-light mt-1 leading-relaxed">
-                Nutricionista, psicanalista e pesquisadora. Unindo neurociência,
-                nutrição e psicanálise para transformar conhecimento científico em
-                orientações práticas e acolhedoras.
+                Ela une nutrição, neurociência e comportamento alimentar para traduzir
+                ciência em cuidado: pesquisa de ponta transformada em orientações
+                práticas, acolhedoras e que cabem no seu dia a dia.
               </p>
               <Link
-                href="/contato"
-                className="text-sm text-agua-dark hover:underline mt-2 inline-block font-medium"
+                href="/ebooks"
+                className="inline-flex items-center gap-2 mt-3 px-5 py-2.5 bg-agua-dark text-white text-sm font-medium rounded-xl hover:bg-agua transition-colors"
               >
-                Fale com a Bibi →
+                Conheça os e-books →
               </Link>
             </div>
           </div>

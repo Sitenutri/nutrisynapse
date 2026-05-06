@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { notifyContact } from "@/lib/mail";
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -30,6 +31,11 @@ export async function POST(req: NextRequest) {
     const contact = await prisma.contact.create({
       data: { name, email, subject, message },
     });
+
+    // Notify via email (non-blocking — don't fail the request if email fails)
+    notifyContact(name, email, subject, message).catch((err) =>
+      console.error("[contato] Email notification failed:", err)
+    );
 
     return NextResponse.json(
       { message: "Mensagem enviada com sucesso!", id: contact.id },
