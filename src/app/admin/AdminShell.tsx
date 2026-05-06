@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { FiHome, FiFileText, FiBook, FiLogOut, FiMenu, FiX } from "react-icons/fi";
+import { FiHome, FiFileText, FiBook, FiGift, FiLogOut, FiMenu, FiX } from "react-icons/fi";
 import { useState } from "react";
 
 const sidebarLinks = [
   { href: "/admin", label: "Dashboard", icon: FiHome },
   { href: "/admin/posts", label: "Posts", icon: FiFileText },
   { href: "/admin/ebooks", label: "E-books", icon: FiBook },
+  { href: "/admin/lead-magnet", label: "Lead Magnet", icon: FiGift },
 ];
 
 export default function AdminShell({

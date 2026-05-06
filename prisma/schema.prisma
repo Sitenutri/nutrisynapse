@@ -70,6 +70,21 @@ model Ebook {
   featured      Boolean  @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  // Sales page fields
+  salesHeadline   String?
+  salesBullets    String[]  @default([])
+  kiwifyUrl       String?
+  salesPageActive Boolean   @default(false)
+
+  // Lead magnet
+  isLeadMagnet    Boolean   @default(false)
+  downloadUrl     String?   // PDF file URL for lead magnet delivery
+}
+
+model SiteSettings {
+  id                String  @id @default("global")
+  leadMagnetEnabled Boolean @default(false)
 }
 
 model Newsletter {

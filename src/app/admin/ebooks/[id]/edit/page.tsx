@@ -35,6 +35,16 @@ export default function EditEbookPage() {
   const [published, setPublished] = useState(false);
   const [featured, setFeatured] = useState(false);
 
+  // Sales page fields
+  const [salesHeadline, setSalesHeadline] = useState("");
+  const [salesBullets, setSalesBullets] = useState("");
+  const [kiwifyUrl, setKiwifyUrl] = useState("");
+  const [salesPageActive, setSalesPageActive] = useState(false);
+
+  // Lead magnet fields
+  const [isLeadMagnet, setIsLeadMagnet] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState("");
+
   useEffect(() => {
     if (status === "unauthenticated") router.push("/admin/login");
   }, [status, router]);
@@ -55,6 +65,12 @@ export default function EditEbookPage() {
         setBuyLink(ebook.buyLink || "");
         setPublished(ebook.published || false);
         setFeatured(ebook.featured || false);
+        setSalesHeadline(ebook.salesHeadline || "");
+        setSalesBullets(Array.isArray(ebook.salesBullets) ? ebook.salesBullets.join("\n") : "");
+        setKiwifyUrl(ebook.kiwifyUrl || "");
+        setSalesPageActive(ebook.salesPageActive || false);
+        setIsLeadMagnet(ebook.isLeadMagnet || false);
+        setDownloadUrl(ebook.downloadUrl || "");
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -79,6 +95,12 @@ export default function EditEbookPage() {
           buyLink: buyLink || null,
           published,
           featured,
+          salesHeadline: salesHeadline || null,
+          salesBullets: salesBullets ? salesBullets.split("\n").filter((b: string) => b.trim()) : [],
+          kiwifyUrl: kiwifyUrl || null,
+          salesPageActive,
+          isLeadMagnet,
+          downloadUrl: downloadUrl || null,
         }),
       });
       if (res.ok) {
@@ -222,6 +244,82 @@ export default function EditEbookPage() {
           </div>
         </div>
 
+        {/* Sales Page Section */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm space-y-4">
+          <h2 className="font-bold text-text">Pagina de Venda (Landing Page)</h2>
+          <p className="text-xs text-text-light">Configure uma pagina de venda oculta em /v/{slug}</p>
+
+          <div>
+            <label className="block text-sm font-medium text-text-light mb-1">Headline de venda</label>
+            <input
+              type="text"
+              value={salesHeadline}
+              onChange={(e) => setSalesHeadline(e.target.value)}
+              placeholder="Ex: Transforme sua saude com neurociencia aplicada"
+              className="w-full px-4 py-3 rounded-xl border border-beige-dark bg-beige/30 text-sm focus:outline-none focus:ring-2 focus:ring-agua"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-text-light mb-1">Bullets de beneficio (um por linha)</label>
+            <textarea
+              value={salesBullets}
+              onChange={(e) => setSalesBullets(e.target.value)}
+              rows={4}
+              placeholder={"Aprenda os fundamentos da neurociencia nutricional\nDescubra como o intestino influencia seu humor\nProtocolos praticos e baseados em evidencias"}
+              className="w-full px-4 py-3 rounded-xl border border-beige-dark bg-beige/30 text-sm focus:outline-none focus:ring-2 focus:ring-agua resize-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-text-light mb-1">URL do Kiwify (checkout)</label>
+            <input
+              type="text"
+              value={kiwifyUrl}
+              onChange={(e) => setKiwifyUrl(e.target.value)}
+              placeholder="https://kiwify.com.br/..."
+              className="w-full px-4 py-3 rounded-xl border border-beige-dark bg-beige/30 text-sm focus:outline-none focus:ring-2 focus:ring-agua"
+            />
+          </div>
+
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={salesPageActive}
+              onChange={(e) => setSalesPageActive(e.target.checked)}
+              className="w-4 h-4 rounded border-beige-dark text-verde-dark focus:ring-verde"
+            />
+            <span className="text-sm text-text">Pagina de venda ativa</span>
+          </label>
+        </div>
+
+        {/* Lead Magnet Section */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm space-y-4">
+          <h2 className="font-bold text-text">Lead Magnet</h2>
+          <p className="text-xs text-text-light">Marque como lead magnet para usar no banner de captura de emails</p>
+
+          <div>
+            <label className="block text-sm font-medium text-text-light mb-1">URL de download do PDF</label>
+            <input
+              type="text"
+              value={downloadUrl}
+              onChange={(e) => setDownloadUrl(e.target.value)}
+              placeholder="https://... (link direto para o PDF)"
+              className="w-full px-4 py-3 rounded-xl border border-beige-dark bg-beige/30 text-sm focus:outline-none focus:ring-2 focus:ring-agua"
+            />
+          </div>
+
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isLeadMagnet}
+              onChange={(e) => setIsLeadMagnet(e.target.checked)}
+              className="w-4 h-4 rounded border-beige-dark text-verde-dark focus:ring-verde"
+            />
+            <span className="text-sm text-text">Este e-book e o lead magnet (apenas um por vez)</span>
+          </label>
+        </div>
+
         <div className="flex justify-end gap-3">
           <Link
             href="/admin/ebooks"
@@ -235,7 +333,7 @@ export default function EditEbookPage() {
             className="flex items-center gap-2 px-6 py-3 bg-verde-dark text-white text-sm font-medium rounded-xl hover:bg-verde transition-colors disabled:opacity-50"
           >
             <FiSave className="w-4 h-4" />
-            {saving ? "Salvando..." : "Salvar Alterações"}
+            {saving ? "Salvando..." : "Salvar Alteracoes"}
           </button>
         </div>
       </div>

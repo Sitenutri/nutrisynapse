@@ -10,6 +10,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import BlogCard from "@/components/BlogCard";
 import EbookCard from "@/components/EbookCard";
 import NewsletterForm from "@/components/NewsletterForm";
+import LeadMagnetBanner from "@/components/LeadMagnetBanner";
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                              */
@@ -174,6 +175,11 @@ export default function HomeClient() {
           </ScrollReveal>
         </div>
       </section>
+
+      {/* ============================================================ */}
+      {/*  LEAD MAGNET BANNER                                           */}
+      {/* ============================================================ */}
+      <LeadMagnetBanner />
 
       {/* ============================================================ */}
       {/*  BENEFITS SECTION                                             */}

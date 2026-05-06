@@ -60,6 +60,12 @@ export async function POST(req: NextRequest) {
       buyLink: body.buyLink,
       published: body.published ?? false,
       featured: body.featured ?? false,
+      salesHeadline: body.salesHeadline || null,
+      salesBullets: body.salesBullets || [],
+      kiwifyUrl: body.kiwifyUrl || null,
+      salesPageActive: body.salesPageActive ?? false,
+      isLeadMagnet: body.isLeadMagnet ?? false,
+      downloadUrl: body.downloadUrl || null,
     },
   });
 
