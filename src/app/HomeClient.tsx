@@ -177,11 +177,6 @@ export default function HomeClient() {
       </section>
 
       {/* ============================================================ */}
-      {/*  LEAD MAGNET BANNER                                           */}
-      {/* ============================================================ */}
-      <LeadMagnetBanner />
-
-      {/* ============================================================ */}
       {/*  BENEFITS SECTION                                             */}
       {/* ============================================================ */}
       <section className="py-20 sm:py-28 bg-white">
@@ -530,6 +525,9 @@ export default function HomeClient() {
           </ScrollReveal>
         </div>
       </section>
+
+      {/* Lead Magnet — floating dialog + trigger button */}
+      <LeadMagnetBanner />
     </>
   );
 }

@@ -75,7 +75,7 @@ export default function EbookCard({
       {/* Cover */}
       <div className={`h-[250px] bg-gradient-to-br ${theme.gradient} flex items-center justify-center relative overflow-hidden`}>
         {coverImage ? (
-          <img src={coverImage} alt={title} className="w-full h-full object-cover" />
+          <img src={coverImage} alt={title} className="w-full h-full object-contain" />
         ) : (
           <>
             {/* Decorative background shapes */}

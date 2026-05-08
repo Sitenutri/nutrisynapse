@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { FiUsers, FiMail, FiDownload, FiSearch } from "react-icons/fi";
+import Link from "next/link";
+import { FiUsers, FiMail, FiDownload, FiSearch, FiSend } from "react-icons/fi";
 
 interface Subscriber {
   id: string;
@@ -92,14 +93,23 @@ export default function NewsletterAdmin() {
             {loading ? "Carregando..." : `${subscribers.length} inscritos no total`}
           </p>
         </div>
-        <button
-          onClick={exportCSV}
-          disabled={loading || subscribers.length === 0}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-agua text-white text-sm font-medium hover:bg-agua-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          <FiDownload className="w-4 h-4" />
-          Exportar CSV
-        </button>
+        <div className="flex gap-2">
+          <Link
+            href="/admin/newsletter/emails"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-agua text-agua-dark text-sm font-medium hover:bg-agua/5 transition-colors"
+          >
+            <FiSend className="w-4 h-4" />
+            Campanhas
+          </Link>
+          <button
+            onClick={exportCSV}
+            disabled={loading || subscribers.length === 0}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-agua text-white text-sm font-medium hover:bg-agua-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <FiDownload className="w-4 h-4" />
+            Exportar CSV
+          </button>
+        </div>
       </div>
 
       {/* Search */}

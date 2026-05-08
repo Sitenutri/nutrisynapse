@@ -103,3 +103,25 @@ model Contact {
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
+model NewsletterEmail {
+  id          String   @id @default(cuid())
+  subject     String
+  previewText String?
+  status      String   @default("draft") // draft | sending | sent | failed
+  sentAt      DateTime?
+  sentCount   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  contents    NewsletterEmailContent[]
+}
+
+model NewsletterEmailContent {
+  id      String          @id @default(cuid())
+  emailId String
+  email   NewsletterEmail @relation(fields: [emailId], references: [id], onDelete: Cascade)
+  type    String          // "text" or "image"
+  content String?
+  images  String?
+  order   Int
+}
