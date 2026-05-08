@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { FiUsers, FiMail, FiDownload, FiSearch, FiSend } from "react-icons/fi";
+import { FiUsers, FiMail, FiDownload, FiSearch, FiSend, FiTrash2 } from "react-icons/fi";
 
 interface Subscriber {
   id: string;
@@ -54,6 +54,22 @@ export default function NewsletterAdmin() {
 
     fetchSubscribers();
   }, [status]);
+
+  async function removeSubscriber(id: string, name: string) {
+    if (!confirm(`Remover "${name}" da newsletter?`)) return;
+    try {
+      const res = await fetch("/api/admin/newsletter", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      if (res.ok) {
+        setSubscribers((prev) => prev.filter((s) => s.id !== id));
+      }
+    } catch {
+      alert("Erro ao remover inscrito.");
+    }
+  }
 
   const filtered = subscribers.filter(
     (s) =>
@@ -148,6 +164,7 @@ export default function NewsletterAdmin() {
                     <th className="text-left px-6 py-3 text-text-light font-medium">Nome</th>
                     <th className="text-left px-6 py-3 text-text-light font-medium">Email</th>
                     <th className="text-left px-6 py-3 text-text-light font-medium">Inscrito em</th>
+                    <th className="text-right px-6 py-3 text-text-light font-medium">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -168,6 +185,15 @@ export default function NewsletterAdmin() {
                         </a>
                       </td>
                       <td className="px-6 py-4 text-text-light">{formatDate(sub.createdAt)}</td>
+                      <td className="px-6 py-4 text-right">
+                        <button
+                          onClick={() => removeSubscriber(sub.id, sub.name)}
+                          className="p-1.5 rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                          title="Remover inscrito"
+                        >
+                          <FiTrash2 className="w-4 h-4" />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -180,7 +206,16 @@ export default function NewsletterAdmin() {
                 <div key={sub.id} className="px-4 py-4">
                   <div className="flex items-start justify-between mb-1">
                     <p className="font-medium text-text">{sub.name}</p>
-                    <span className="text-xs text-text-light">#{i + 1}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-text-light">#{i + 1}</span>
+                      <button
+                        onClick={() => removeSubscriber(sub.id, sub.name)}
+                        className="p-1 rounded text-red-400 hover:text-red-600"
+                        title="Remover"
+                      >
+                        <FiTrash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
                   <a
                     href={`mailto:${sub.email}`}
