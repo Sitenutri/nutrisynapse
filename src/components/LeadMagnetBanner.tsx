@@ -20,12 +20,18 @@ export default function LeadMagnetBanner() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   useEffect(() => {
+    // Don't auto-open if user already dismissed this session
+    const dismissed = sessionStorage.getItem("lead-magnet-dismissed");
     fetch("/api/lead-magnet")
       .then((r) => r.json())
       .then((data) => {
         if (data.enabled && data.ebook) {
           setEnabled(true);
           setEbook(data.ebook);
+          // Auto-open after 2s if not dismissed this session
+          if (!dismissed) {
+            setTimeout(() => setOpen(true), 2000);
+          }
         }
       })
       .catch(() => {});
@@ -103,14 +109,14 @@ export default function LeadMagnetBanner() {
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setOpen(false)}
+            onClick={() => { setOpen(false); sessionStorage.setItem("lead-magnet-dismissed", "1"); }}
           />
 
           {/* Dialog content */}
           <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 sm:p-8 animate-in fade-in zoom-in-95 duration-200">
             {/* Close button */}
             <button
-              onClick={() => setOpen(false)}
+              onClick={() => { setOpen(false); sessionStorage.setItem("lead-magnet-dismissed", "1"); }}
               className="absolute top-4 right-4 p-2 text-text-light hover:text-text rounded-xl hover:bg-beige/50 transition-colors"
               aria-label="Fechar"
             >
