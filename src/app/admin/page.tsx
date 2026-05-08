@@ -79,7 +79,7 @@ export default function AdminDashboard() {
       value: stats.subscribers,
       icon: FiUsers,
       color: "bg-azul/10 text-azul",
-      href: "#",
+      href: "/admin/newsletter",
     },
   ];
 
