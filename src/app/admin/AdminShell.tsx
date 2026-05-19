@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { FiHome, FiFileText, FiBook, FiGift, FiUsers, FiLogOut, FiMenu, FiX } from "react-icons/fi";
+import { FiHome, FiFileText, FiBook, FiGift, FiUsers, FiLogOut, FiMenu, FiX, FiActivity } from "react-icons/fi";
 import { useState } from "react";
 
 const sidebarLinks = [
@@ -12,6 +12,7 @@ const sidebarLinks = [
   { href: "/admin/ebooks", label: "E-books", icon: FiBook },
   { href: "/admin/newsletter", label: "Newsletter", icon: FiUsers },
   { href: "/admin/lead-magnet", label: "Lead Magnet", icon: FiGift },
+  { href: "/admin/logs", label: "Logs", icon: FiActivity },
 ];
 
 export default function AdminShell({

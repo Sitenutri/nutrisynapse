@@ -125,3 +125,16 @@ model NewsletterEmailContent {
   images  String?
   order   Int
 }
+
+model AppLog {
+  id        String   @id @default(cuid())
+  level     String   // "info" | "warn" | "error"
+  event     String   // ex: "lead_magnet.email_sent", "newsletter.subscribe", "contact.received"
+  message   String
+  meta      String?  // JSON string — dados extras (email, ebookTitle, error, etc.)
+  createdAt DateTime @default(now())
+
+  @@index([level])
+  @@index([event])
+  @@index([createdAt])
+}
