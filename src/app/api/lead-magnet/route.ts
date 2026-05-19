@@ -61,11 +61,13 @@ export async function POST(req: NextRequest) {
       await prisma.newsletter.create({ data: { name, email } });
     }
 
-    // Send the email with download link
+    // Send the email with download link (must await — Vercel kills unawaited promises after response)
     const downloadUrl = ebook.downloadUrl || ebook.buyLink || "#";
-    sendLeadMagnetEmail(name, email, ebook.title, downloadUrl).catch((err) =>
-      console.error("[lead-magnet] Email send failed:", err)
-    );
+    try {
+      await sendLeadMagnetEmail(name, email, ebook.title, downloadUrl);
+    } catch (err) {
+      console.error("[lead-magnet] Email send failed:", err);
+    }
 
     return NextResponse.json({ message: "E-book enviado! Verifique seu email." }, { status: 201 });
   } catch {

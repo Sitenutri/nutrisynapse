@@ -32,10 +32,12 @@ export async function POST(req: NextRequest) {
       data: { name, email, subject, message },
     });
 
-    // Notify via email (non-blocking — don't fail the request if email fails)
-    notifyContact(name, email, subject, message).catch((err) =>
-      console.error("[contato] Email notification failed:", err)
-    );
+    // Notify via email (must await — Vercel kills unawaited promises after response)
+    try {
+      await notifyContact(name, email, subject, message);
+    } catch (err) {
+      console.error("[contato] Email notification failed:", err);
+    }
 
     return NextResponse.json(
       { message: "Mensagem enviada com sucesso!", id: contact.id },

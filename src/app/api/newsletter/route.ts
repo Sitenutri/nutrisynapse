@@ -17,10 +17,12 @@ export async function POST(req: NextRequest) {
 
     await prisma.newsletter.create({ data: { name, email } });
 
-    // Notify via email (non-blocking — don't fail the request if email fails)
-    notifyNewsletter(name, email).catch((err) =>
-      console.error("[newsletter] Email notification failed:", err)
-    );
+    // Notify via email (must await — Vercel kills unawaited promises after response)
+    try {
+      await notifyNewsletter(name, email);
+    } catch (err) {
+      console.error("[newsletter] Email notification failed:", err);
+    }
 
     return NextResponse.json({ message: "Inscrito com sucesso!" }, { status: 201 });
   } catch {
