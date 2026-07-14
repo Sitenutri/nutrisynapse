@@ -143,19 +143,19 @@ export default function DiabetesClient() {
             </div>
             <h3 className="text-2xl font-bold text-text mb-2">Material Gratuito</h3>
             <h4 className="text-lg font-medium text-verde-dark mb-3">
-              Checklist de Segurança Alimentar para Famílias com Diabetes
+              Mapa de Emergência para Controlar o Açúcar no Sangue
             </h4>
             <p className="text-text-light mb-6 text-sm leading-relaxed">
-              Baixe gratuitamente nosso checklist completo com orientações práticas para manter a
-              segurança alimentar em casa. Um recurso essencial para famílias que convivem com a
-              diabetes no dia a dia.
+              Baixe gratuitamente o Mapa de Emergência para Controlar o Açúcar no Sangue. Descubra
+              como fazer escolhas inteligentes em 7 dias, sem dietas restritivas ou malucas.
+              Cardápios práticos, lista de compras e estratégias baseadas em ciência.
             </p>
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
             {leadStatus === "success" ? (
               <div className="bg-verde/20 text-verde-dark px-6 py-4 rounded-xl">
-                <p className="font-medium">Obrigado! Verifique seu e-mail para baixar o checklist.</p>
+                <p className="font-medium">Obrigado! Verifique seu e-mail para baixar o mapa.</p>
               </div>
             ) : (
               <form onSubmit={handleLeadSubmit} className="flex flex-col sm:flex-row gap-3">
@@ -180,7 +180,7 @@ export default function DiabetesClient() {
                   disabled={leadStatus === "loading"}
                   className="px-6 py-3 bg-verde-dark text-white text-sm font-medium rounded-xl hover:bg-verde transition-colors disabled:opacity-50"
                 >
-                  {leadStatus === "loading" ? "Enviando..." : "Baixar Checklist"}
+                  {leadStatus === "loading" ? "Enviando..." : "Baixar Mapa"}
                 </button>
               </form>
             )}
