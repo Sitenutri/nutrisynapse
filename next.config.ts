@@ -1,6 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  /* ─── Server-only packages (not bundled, reduces build memory) ─── */
+  serverExternalPackages: [
+    "@aws-sdk/client-s3",
+    "@aws-sdk/s3-request-presigner",
+    "@anthropic-ai/sdk",
+    "sharp",
+    "unpdf",
+    "@prisma/client",
+    "bcryptjs",
+  ],
+
   /* ─── Image optimization ─── */
   images: {
     remotePatterns: [
