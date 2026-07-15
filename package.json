@@ -5,7 +5,7 @@
   "scripts": {
     "postinstall": "prisma generate",
     "dev": "next dev",
-    "build": "prisma db push && next build --no-turbopack",
+    "build": "prisma db push && next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "db:push": "prisma db push",
